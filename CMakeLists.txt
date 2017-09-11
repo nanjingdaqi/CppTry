@@ -12,6 +12,12 @@ configure_file(
 
 #set(SOURCE_FILES main.cpp)
 
+add_library(my_lib lib_foo.cpp)
+
 include_directories("${PROJECT_BINARY_DIR}")
 
+include_directories("${PROJECT_SOURCE_DIR}/my_lib")
+add_subdirectory(my_lib)
+
 add_executable(try main.cpp)
+target_link_libraries(try my_lib)
