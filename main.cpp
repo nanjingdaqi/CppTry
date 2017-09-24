@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fcntl.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 int main() {
 
@@ -10,6 +11,8 @@ int main() {
     int sz = write(fd, buf, 7);
     printf("write res: %d", sz);
     close(fd);
+
+    chmod("foo.txt", S_IRWXU|S_IRWXG);
 
     return 0;
 }
