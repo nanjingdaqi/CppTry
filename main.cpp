@@ -11,7 +11,18 @@ void quit(char* msg, int exit_code) {
     exit(exit_code);
 }
 
+void* thread_run(void* args) {
+    pthread_t tid = pthread_self();
+    printf("start run in thread: %ld\n", tid);
+    printf("args is: %s\n", (char*) args);
+}
+
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    pthread_t pid;
+    int ret = pthread_create(&pid, NULL, thread_run, (void* )"Hello thread");
+    if (ret != 0) {
+        quit("pthread_create fail", -1);
+    }
+    pthread_join(pid, NULL);
     return 0;
 }
