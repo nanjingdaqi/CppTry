@@ -11,18 +11,29 @@ void quit(char* msg, int exit_code) {
     exit(exit_code);
 }
 
+#define T_SIZE 10
+int g_i = 0;
+pthread_mutex_t mtx = PTHREAD_MUTEX_INITIALIZER;
+
 void* thread_run(void* args) {
-    pthread_t tid = pthread_self();
-    printf("start run in thread: %ld\n", tid);
-    printf("args is: %s\n", (char*) args);
+    pthread_mutex_lock(&mtx);
+    printf("g_i: %d\n", g_i++);
+    pthread_mutex_unlock(&mtx);
 }
 
 int main() {
-    pthread_t pid;
-    int ret = pthread_create(&pid, NULL, thread_run, (void* )"Hello thread");
-    if (ret != 0) {
-        quit("pthread_create fail", -1);
+    pthread_t pids[T_SIZE];
+    for (int i = 0; i < T_SIZE; ++i) {
+        pthread_t pid;
+        int ret = pthread_create(&pid, NULL, thread_run,
+                                 (void *) "Hello thread");
+        if (ret != 0) {
+            quit("pthread_create fail", -1);
+        }
+        pids[i] = pid;
     }
-    pthread_join(pid, NULL);
+    for (int i = 0; i < T_SIZE; ++i) {
+        pthread_join(pids[i], NULL);
+    }
     return 0;
 }
