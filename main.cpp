@@ -11,7 +11,14 @@ void quit(char* msg, int exit_code) {
     exit(exit_code);
 }
 
+int* g_i;
+
+void check_uninit_pt() {
+    printf("g_i: %d", g_i);
+    printf("g_i val: %d", *g_i);
+}
+
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    check_uninit_pt();
     return 0;
 }
