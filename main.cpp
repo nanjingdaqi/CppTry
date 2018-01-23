@@ -12,6 +12,10 @@ void quit(char* msg, int exit_code) {
 }
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    char str[80];
+    sprintf(str, "This is %d\n", 100);
+    printf(str);
+    sprintf(str, "That %d\n", 200);
+    printf(str);
     return 0;
 }
