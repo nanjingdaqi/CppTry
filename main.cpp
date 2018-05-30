@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+#include <fcntl.h>
 
 void quit(char *msg, int exit_code) {
     size_t len = strlen(msg);
@@ -15,22 +16,11 @@ void foo(int arg[]) {
     printf("arg len: %d\n", sizeof(arg));
 }
 
+void testOpenMode() {
+    open("tmp.txt", O_WRONLY | O_CREAT);
+}
+
 int main() {
-//    int *pi = new int;
-//    *pi = 100;
-//    printf("pi: %d\n", pi);
-//    delete pi;
-//    printf("pi: %d\n", pi);
-//    printf("pi: %d\n", *(pi));
-//    printf("pi: %d\n", *(pi + 100000));
-
-    int *pa = new int[10];
-    printf("pa: %d\n", *(pa));
-    printf("pa: %d\n", *(pa+1));
-    printf("pa: %d\n", *(pa+9));
-    printf("pa: %d\n", *(pa+10));
-
-    foo(pa);
-
+    testOpenMode();
     return 0;
 }
